@@ -41,6 +41,8 @@ void individuo::imprimir() {
 }
 
 individuo::~individuo() {
-
+    this->balanceamento = 0;
+    this->tamanho = 0;
+    this->matrix.clear();
 }
 
