@@ -19,5 +19,6 @@ int main(int argc, char** argv) {
     teste->inicializa(5);    
     teste->imprimir();
     cin>>opc;
+    return 0;
 }
 
