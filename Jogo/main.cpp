@@ -14,11 +14,15 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {   
-    int opc;
-    individuo* teste = new individuo();
-    teste->inicializa(5);    
-    teste->imprimir();
-    cin>>opc;
+    genetico* gn = new genetico();
+    gn->cGenetico(5, 20, 30);
+    
+    /**
+     * 
+     * Dando erro de segmentação
+     * 
+     */
+    //gn->imprimirPopulacao();
     return 0;
 }
 
