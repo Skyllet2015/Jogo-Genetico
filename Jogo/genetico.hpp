@@ -22,9 +22,16 @@ public:
     void cGenetico(int tamMatriz, int popInicial, int porcentMelhores);
     void popular(int tamMatriz, int popInicial);
     void selecao(int porcentMelhores);
-    void imprimirPopulacao();
+    void imprimirPopulacao(); 
+    int getTamPopulacao();
+    
     virtual ~genetico();
+    
+    friend class individuo;
 private:
+    int tamMatriz;
+    int porcentMelhores;
+    int popInicial;
     vector<individuo*> populacao;
 };
 

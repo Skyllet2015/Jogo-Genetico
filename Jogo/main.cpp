@@ -15,14 +15,15 @@ using namespace std;
  */
 int main(int argc, char** argv) {   
     genetico* gn = new genetico();
-    gn->cGenetico(5, 20, 30);
+    gn->cGenetico(5, 25, 30);    
+    cerr<<"Quantidade: "<<gn->getTamPopulacao()<<endl;
     
     /**
      * 
      * Dando erro de segmentação
      * 
      */
-    //gn->imprimirPopulacao();
+    gn->imprimirPopulacao();
     return 0;
 }
 

@@ -7,33 +7,29 @@
 
 #include "individuo.hpp"
 
-individuo::individuo(){};
-
-void individuo::inicializa(int tam) {
+individuo* individuo::inicializa(int tam) {
     individuo* novo = new individuo();
     novo->balanceamento = 0;
     novo->tamanho = tam;
-    vector<vector<int> > matri(tam);
-    novo->matrix = matri;
-    novo->preencher();
+
+    vector<vector<int> > aux(tamanho);
+    srand(time(NULL));
+    int cont = 0;
+    int linha;
+    int coluna;
+
+    while (cont < tamanho) {
+        linha = rand() % tamanho;
+        coluna = rand() % tamanho;
+        if (aux[linha][coluna] == 0) {
+            aux[linha][coluna] = 1;
+            cont++;
+        }
+    }
+    novo->matrix = aux;
+    return novo;
 };
 
-void individuo::preencher() {
-    srand((unsigned)time(0));
-    int linha = rand() % this->tamanho;
-    int coluna = rand() % this->tamanho;
-    int pc = 30;
-    int quantidade = 0;
-    int porcent = (((this->tamanho * this->tamanho) / pc) * 100);
-
-    do {
-        if (this->matrix[linha][coluna] == 0) {
-            this->matrix[linha][coluna] = 1;
-            quantidade++;
-        }
-    } while (quantidade < porcent);
-
-}
 
 int individuo::getBalanceamento() {
     return this->balanceamento;
@@ -45,15 +41,6 @@ int individuo::getTamanho() {
 
 void individuo::setBalanceamento(int novoBalanceamento) {
     this->balanceamento = novoBalanceamento;
-}
-
-void individuo::imprimir() {
-    for (int i = 0; i< this->tamanho; i++) {
-        cout << endl;
-        for (int j = 0; j< this->tamanho; j++) {
-            cout << this->matrix[i][j] << " ";
-        }
-    }
 }
 
 bool individuo::operator<(individuo* i) {

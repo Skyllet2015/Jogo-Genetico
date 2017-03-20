@@ -19,15 +19,13 @@ using namespace std;
 
 class individuo {
 public:
-    individuo();
-    void inicializa(int);
-    void preencher();
+    individuo* inicializa(int);
+    void preencher(int);
     
     int getBalanceamento();
     int getTamanho();
     
     void setBalanceamento(int); 
-    void imprimir();
     
     bool operator<(individuo* i);
     
@@ -39,7 +37,7 @@ private:
     int vermelhos;
     int clicados;
     int tamanho;
-    vector<vector<int> > matrix;
+    vector<vector<int>> matrix = vector<vector<int>> (getTamanho());
 };
 
 #endif /* INDIVIDUO_HPP */

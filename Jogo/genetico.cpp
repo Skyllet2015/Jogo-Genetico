@@ -9,22 +9,25 @@
 #include "individuo.hpp"
 
 void genetico::cGenetico(int tamMatriz, int popInicial, int porcentMelhores) {
-    this->populacao =  vector<individuo*> (popInicial);
+    this->tamMatriz = tamMatriz;
+    this->popInicial = popInicial;
+    this->porcentMelhores = porcentMelhores;
     this->popular(tamMatriz, popInicial);
     /**
      * implantar algoritmo genetico
      */
-
-
     sort(populacao.begin(), populacao.end());
 }
 
+int genetico::getTamPopulacao() {
+    return this->populacao.size();
+}
+
 void genetico::popular(int tamMatriz, int popInicial) {
+    individuo* ind = new individuo();
     if (this->populacao.size() < popInicial) {
         for (int i = this->populacao.size(); i < popInicial; i++) {
-            individuo* ind = new individuo();
-            ind->inicializa(tamMatriz);
-            populacao.push_back(ind);
+            populacao.push_back(ind->inicializa(tamMatriz));
         }
     }
 }
@@ -34,11 +37,17 @@ void genetico::selecao(int porcentMelhores) {
     this->populacao.erase(this->populacao.begin() + porcent, this->populacao.end());
 }
 
-void genetico::imprimirPopulacao(){
-    for(int i = 0; i < this->populacao.size(); i++){
-        this->populacao[i]->imprimir();
+void genetico::imprimirPopulacao() {
+    cerr << "Imprimindo População!" << endl;
+    for (individuo* ind : this->populacao) {
+        for (int i = 0; i < this->tamMatriz; i++) {
+            for (int j = 0; j < this->tamMatriz; j++) {
+                cerr << ind->matrix[i][j] << " ";
+            }
+        }
     }
 }
+
 
 genetico::~genetico() {
 }
