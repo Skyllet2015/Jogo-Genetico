@@ -14,7 +14,7 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "individuo.hpp"
+#include "Individuo.hpp"
 
 using namespace std;
 class genetico {
@@ -27,12 +27,12 @@ public:
     
     virtual ~genetico();
     
-    friend class individuo;
+    friend class Individuo;
 private:
     int tamMatriz;
     int porcentMelhores;
     int popInicial;
-    vector<individuo*> populacao;
+    vector<Individuo> populacao;
 };
 
 #endif /* GENETICO_HPP */

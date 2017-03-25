@@ -35,8 +35,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/genetico.o \
-	${OBJECTDIR}/individuo.o \
+	${OBJECTDIR}/Genetico.o \
+	${OBJECTDIR}/Individuo.o \
 	${OBJECTDIR}/main.o
 
 
@@ -64,15 +64,15 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/jogo: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/jogo ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/genetico.o: genetico.cpp
+${OBJECTDIR}/Genetico.o: Genetico.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/genetico.o genetico.cpp
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Genetico.o Genetico.cpp
 
-${OBJECTDIR}/individuo.o: individuo.cpp
+${OBJECTDIR}/Individuo.o: Individuo.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/individuo.o individuo.cpp
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Individuo.o Individuo.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
