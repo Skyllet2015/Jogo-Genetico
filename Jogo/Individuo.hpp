@@ -18,7 +18,8 @@ using namespace std;
 class Individuo {
 public:
     void inicializar(int tamanho);
-    void preencher();
+    void preencher(int tamanho);
+    bool clicar(int linha, int coluna);
     void imprimir();
     
     int getTamanho();
