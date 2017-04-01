@@ -2,135 +2,134 @@
  * File:   Individuo.cpp
  * Author: jsouza
  * 
- * Created on 25 de Março de 2017, 00:23
+ * Created on 31 de Março de 2017, 22:50
  */
 
 #include "Individuo.hpp"
 
-void Individuo::inicializar(int tamanho) {
-    this->tamanho = tamanho;
+Individuo::Individuo(int tam) {
     this->clicados = 0;
-    vector< vector<int> > aux(tamanho, vector<int>(tamanho));
-    this->matriz = aux;
-    preencher(tamanho);
+    this->tamanho = tam;
+    this->vermelhos = 0;
+    this->matrizClic = vector<vector<int>> (tam, vector<int>(tam));
+    this->matrizCores = vector<vector<int>> (tam, vector<int>(tam));
 }
 
-void Individuo::preencher(int tam) {
-    int cont = 0;
-    while (cont < tam) {
-        srand((unsigned int) time((time_t *) NULL));
-        if (clicar(rand() % tam, rand() % tam) == true) {
-            cont++;
-        }
+void Individuo::preencher() {
+    for (int cont = 0; cont < tamanho;) {
+        int add = clicar(rand() % tamanho, rand() % tamanho);
+        if (add == true) cont++;
     }
+    this->balancear();
 }
 
 bool Individuo::clicar(int linha, int coluna) {
-    if (matriz[linha][coluna] == 0) {
-        matriz[linha][coluna] = 1;
+    if (linha >= 0 and coluna >= 0 and linha < tamanho and coluna < tamanho) {
 
-        if ((linha - 1 >= 0 and linha - 1 < tamanho)) {
-            if ((matriz[linha - 1][coluna] == 1) or matriz[linha - 1][coluna] == 3) {
-                if (matriz[linha - 1][coluna] == 1) {
-                    matriz[linha - 1][coluna] = 3;
-                } else {
-                    matriz[linha - 1][coluna] = 1;
-                }
-            } else if ((matriz[linha - 1][coluna] == 0) or matriz[linha - 1][coluna] == 2) {
-                if (matriz[linha - 1][coluna] == 0) {
-                    matriz[linha - 1][coluna] = 2;
-                } else {
-                    matriz[linha - 1][coluna] = 0;
-                }
+        if (this->matrizClic[linha][coluna] == 0) {
+            this->matrizClic[linha][coluna] = 1;
+
+            // Modificando a cor da celula clicada
+            if (this->matrizCores[linha][coluna] == 0) {
+                this->matrizCores[linha][coluna] = 1;
+            } else {
+                this->matrizCores[linha][coluna] = 0;
             }
-        }
 
-        if ((linha + 1 >= 0 and linha + 1 < tamanho)) {
-            if ((matriz[linha + 1][coluna] == 1) or matriz[linha + 1][coluna] == 3) {
-                if (matriz[linha + 1][coluna] == 1) {
-                    matriz[linha + 1][coluna] = 3;
-                } else {
-                    matriz[linha + 1][coluna] = 1;
-                }
-            } else if ((matriz[linha + 1][coluna] == 0) or matriz[linha + 1][coluna] == 2) {
-                if (matriz[linha + 1][coluna] == 0) {
-                    matriz[linha + 1][coluna] = 2;
-                } else {
-                    matriz[linha + 1][coluna] = 0;
-                }
+            //Modificando a cor da celula de cima da clicada
+            if ((linha - 1 >= 0) and (this->matrizCores[linha - 1][coluna] == 0)) {
+                this->matrizCores[linha - 1][coluna] = 1;
+            } else if (linha - 1 >= 0) {
+                this->matrizCores[linha - 1][coluna] = 0;
             }
-        }
 
-        if ((coluna - 1 >= 0 and coluna - 1 < tamanho)) {
-            if ((matriz[linha][coluna - 1] == 1) or matriz[linha][coluna - 1] == 3) {
-                if (matriz[linha][coluna - 1] == 1) {
-                    matriz[linha][coluna - 1] = 3;
-                } else {
-                    matriz[linha][coluna - 1] = 1;
-                }
-            } else if ((matriz[linha][coluna - 1] == 0) or matriz[linha][coluna - 1] == 2) {
-                if (matriz[linha][coluna - 1] == 0) {
-                    matriz[linha][coluna - 1] = 2;
-                } else {
-                    matriz[linha][coluna - 1] = 0;
-                }
+            //Modificando a cor da celula de baixo da clicada
+            if ((linha + 1 < this->tamanho) and (this->matrizCores[linha + 1][coluna] == 0)) {
+                this->matrizCores[linha + 1][coluna] = 1;
+            } else if (linha + 1 < this->tamanho) {
+                this->matrizCores[linha + 1][coluna] = 0;
             }
-        }
 
-        if ((coluna + 1 >= 0 and coluna + 1 < tamanho)) {
-            if ((matriz[linha][coluna + 1] == 1) or matriz[linha][coluna + 1] == 3) {
-                if (matriz[linha][coluna + 1] == 1) {
-                    matriz[linha][coluna + 1] = 3;
-                } else {
-                    matriz[linha][coluna + 1] = 1;
-                }
-            } else if ((matriz[linha][coluna + 1] == 0) or matriz[linha][coluna + 1] == 2) {
-                if (matriz[linha][coluna + 1] == 0) {
-                    matriz[linha][coluna + 1] = 2;
-                } else {
-                    matriz[linha][coluna + 1] = 0;
-                }
+            //Modificando a cor da celula esquerda da clicada
+            if ((coluna - 1 >= 0) and (this->matrizCores[linha][coluna - 1] == 0)) {
+                this->matrizCores[linha][coluna - 1] = 1;
+            } else if (coluna - 1 >= 0) {
+                this->matrizCores[linha][coluna - 1] = 0;
+            }
+
+            //Modificando a cor da celula direita da clicada
+            if ((coluna + 1 < this->tamanho) and (this->matrizCores[linha][coluna + 1] == 0)) {
+                this->matrizCores[linha][coluna + 1] = 1;
+            } else if (coluna + 1 < this->tamanho) {
+                this->matrizCores[linha][coluna + 1] = 0;
             }
         }
         return true;
     }
+    return false;
+
 }
 
-void Individuo::imprimir() {
+void Individuo::balancear() {
+    int auxClic = 0, auxVer = 0;
+    for (int i = 0; i < tamanho; i++) {
+        for (int j = 0; j < tamanho; j++) {
+            if (matrizCores[i][j] == 0) {
+                auxVer++;
+            }
+            if (matrizClic[i][j] == 1) {
+                auxClic++;
+            }
+        }
+    }
+    this->vermelhos = auxVer;
+    this->clicados = auxClic;
+    this->balanceamento = ((auxVer * 5) + (auxClic));
+}
+
+Individuo* Individuo::cruzar(Individuo* ind) {
+    Individuo* filho = new Individuo(this->tamanho);
+    int val = 0, cont = 0;
+    cerr << "" << endl;
+    for (int i = 0; i < this->tamanho; i++) {
+        for (int j = 0; j < this->tamanho; j++) {
+            if ((val == 0 and (this->matrizClic[i][j] == 1 or this->matrizClic[i][j] == 3)) and (filho->matrizClic[i][j] != 1 or filho->matrizClic[i][j] != 3)) {
+                filho->clicar(i, j);
+                val = 1;
+                cont++;
+            } else if ((val == 1 and (ind->matrizClic[i][j] == 1 or ind->matrizClic[i][j] == 3)) and (filho->matrizClic[i][j] != 1 or filho->matrizClic[i][j] != 3)) {
+                filho->clicar(i, j);
+                val = 0;
+                cont++;
+            }
+        }
+    }
+    filho->balancear();
+    return filho;
+}
+
+void Individuo::imprimirAtributos() {
+    cout << "\nClicados: " << this->clicados << endl;
+    cout << "Vermelhos: " << this->vermelhos << endl;
+    cout << "Tamanho: " << this->tamanho << endl;
+    cout << "Balanceamento: " << this->balanceamento << endl;
+    this->imprimirMatriz();
+}
+
+void Individuo::imprimirMatriz() {
+    cout << endl << "Imprimindo matriz de Clicados" << endl;
     for (int i = 0; i < tamanho; i++) {
         cout << endl;
         for (int j = 0; j < tamanho; j++) {
-            if (matriz[i][j] == 1) {
-                cout << "[X]";
-            } else if (matriz[i][j] == 2) {
-                cout << "[V]";
-            } else if (matriz[i][j] == 3) {
-                cout << "[.]";
-            } else {
-                cout << "[ ]";
-            }
+            cout << "[" << this->matrizClic[i][j] << "]";
+
         }
     }
-}
-
-int Individuo::getBalanceamento() {
-    return this->balanceamento;
-}
-
-int Individuo::getTamanho() {
-    return this->tamanho;
-}
-
-void Individuo::setBalanceamento(int novo) {
-    this->balanceamento = novo;
-}
-
-bool Individuo::operator<(Individuo* i) {
-    if (this->vermelhos < i->vermelhos) {
-        return true;
-    } else if (this->vermelhos == i->vermelhos) {
-        return (this->clicados < i->clicados);
-    } else {
-        return false;
+    cout << "\n\nImprimindo matriz de Cores" << endl;
+    for (int i = 0; i < tamanho; i++) {
+        cout << endl;
+        for (int j = 0; j < tamanho; j++) {
+            cout << "[" << this->matrizCores[i][j] << "]";
+        }
     }
 }

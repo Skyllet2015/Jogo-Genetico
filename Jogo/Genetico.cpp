@@ -6,6 +6,7 @@
 
 #include "Genetico.hpp"
 
+/*
 void Genetico::cGenetico(int tamMatriz, int popInicial, int porcentMelhores) {
     this->popInicial = popInicial;
     this->tamMatriz = tamMatriz;
@@ -39,3 +40,5 @@ void Genetico::imprimirPopulacao(){
 int Genetico::getTamPopulacao() {
     return populacao.size();
 }
+ * 
+ */
