@@ -6,10 +6,14 @@
  */
 
 #include "Individuo.hpp"
+#include "Genetico.hpp"
 
 int main(int argc, char** argv) {
-    srand((unsigned) time(nullptr));
+    cerr<<"Testando Início"<<endl;
+    srand((unsigned) time(nullptr));    
+    Genetico* gen = new Genetico(5, 50, 30, 10, 10000);
     
+    /*
     cout<<endl<<endl<<"Criando Primeiro Individuo!";
     Individuo* ind0 = new Individuo(5);
     ind0->preencher();
@@ -28,6 +32,7 @@ int main(int argc, char** argv) {
     Individuo* filho1 = ind1->cruzar(ind0);
     filho1->imprimirAtributos();
 
+     */
     return 0;
 }
 

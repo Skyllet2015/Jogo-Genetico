@@ -64,6 +64,7 @@ bool Individuo::clicar(int linha, int coluna) {
                 this->matrizCores[linha][coluna + 1] = 0;
             }
         }
+        this->balancear();
         return true;
     }
     return false;
@@ -131,5 +132,17 @@ void Individuo::imprimirMatriz() {
         for (int j = 0; j < tamanho; j++) {
             cout << "[" << this->matrizCores[i][j] << "]";
         }
+    }
+}
+
+bool Individuo::operator<(Individuo* i) {
+    this->balancear();
+    i->balancear();
+    if (this->clicados < i->clicados) {
+        return true;
+    } else if (this->clicados == i->clicados) {
+        return (this->balanceamento < i->balanceamento);
+    } else {
+        return false;
     }
 }

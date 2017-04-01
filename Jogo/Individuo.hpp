@@ -24,8 +24,12 @@ public:
     void balancear();
     Individuo* cruzar(Individuo* ind);
     
+    bool operator<(Individuo* i);
+    
     void imprimirAtributos();
     void imprimirMatriz();
+    
+    friend class Genetico;
 private:
     int vermelhos;
     int clicados;

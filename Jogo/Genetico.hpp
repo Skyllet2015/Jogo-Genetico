@@ -19,19 +19,22 @@
 using namespace std;
 class Genetico {
 public:
-    void cGenetico(int tamMatriz, int popInicial, int porcentMelhores);
-    void popular(int tamMatriz, int popInicial);
-    void selecao(int porcentMelhores);
-    void solver();
-    void imprimirPopulacao(); 
-    int getTamPopulacao();
-        
+    Genetico(int matriz, int popInicial, int elite, int mutacao, int geracoes);
+    void gerarPopulacao();
+    bool avaliarPopulacao();
+    void crossover();
+    void mutacao();
+    void eliminarNaoElite();
+    
+    
     friend class Individuo;
 private:
-    int tamMatriz;
-    int porcentMelhores;
-    int popInicial;
-    vector<Individuo*> populacao;
+    int geracoes; //Quantidade de gerações limite
+    int popInicial; //Tamanho da população inicial requerida
+    int Matrix; //Tamanho da matriz quadrada
+    int Elite; //Porcentagem considerada Elite
+    int Mutation; //Porcentagem de mutação que deve ser adicionada
+    vector<Individuo*> populacao; //Matriz de população
 };
 
 #endif /* GENETICO_HPP */
