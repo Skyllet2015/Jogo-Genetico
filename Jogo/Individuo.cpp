@@ -7,16 +7,16 @@
 
 #include "Individuo.hpp"
 
-Individuo::Individuo(int tam) {
-    this->clicados = 0;
+Individuo::Individuo(int tam, int ger) {
+    this->geracao = ger;
     this->tamanho = tam;
-    this->vermelhos = 0;
     this->matrizClic = vector<vector<int>> (tam, vector<int>(tam));
     this->matrizCores = vector<vector<int>> (tam, vector<int>(tam));
 }
 
 void Individuo::preencher() {
-    for (int cont = 0; cont < tamanho;) {
+    
+    for (int cont = 0; cont < tamanho+tamanho/4;) {
         int add = clicar(rand() % tamanho, rand() % tamanho);
         if (add == true) cont++;
     }
@@ -89,16 +89,16 @@ void Individuo::balancear() {
 }
 
 Individuo* Individuo::cruzar(Individuo* ind) {
-    Individuo* filho = new Individuo(this->tamanho);
+    Individuo* filho = new Individuo(this->tamanho, geracao);
     int val = 0, cont = 0;
     cerr << "" << endl;
     for (int i = 0; i < this->tamanho; i++) {
         for (int j = 0; j < this->tamanho; j++) {
-            if ((val == 0 and (this->matrizClic[i][j] == 1 or this->matrizClic[i][j] == 3)) and (filho->matrizClic[i][j] != 1 or filho->matrizClic[i][j] != 3)) {
+            if ((val == 0 and (this->matrizClic[i][j] == 1)) and (filho->matrizClic[i][j] != 1)) {
                 filho->clicar(i, j);
                 val = 1;
                 cont++;
-            } else if ((val == 1 and (ind->matrizClic[i][j] == 1 or ind->matrizClic[i][j] == 3)) and (filho->matrizClic[i][j] != 1 or filho->matrizClic[i][j] != 3)) {
+            }else if ((val == 1 and (ind->matrizClic[i][j] == 1)) and (filho->matrizClic[i][j] != 1)) {
                 filho->clicar(i, j);
                 val = 0;
                 cont++;
@@ -132,17 +132,5 @@ void Individuo::imprimirMatriz() {
         for (int j = 0; j < tamanho; j++) {
             cout << "[" << this->matrizCores[i][j] << "]";
         }
-    }
-}
-
-bool Individuo::operator<(Individuo* i) {
-    this->balancear();
-    i->balancear();
-    if (this->clicados < i->clicados) {
-        return true;
-    } else if (this->clicados == i->clicados) {
-        return (this->balanceamento < i->balanceamento);
-    } else {
-        return false;
     }
 }

@@ -11,7 +11,10 @@
 int main(int argc, char** argv) {
     cerr<<"Testando Início"<<endl;
     srand((unsigned) time(nullptr));    
-    Genetico* gen = new Genetico(5, 50, 30, 10, 10000);
+    
+    int tamanho = 5;
+    //Genetico(int matriz, int popInicial, int elite, int mutacao, int geracoes);
+    Genetico* gen = new Genetico(tamanho, (tamanho*100), 30, 50, (tamanho*100));
     
     /*
     cout<<endl<<endl<<"Criando Primeiro Individuo!";

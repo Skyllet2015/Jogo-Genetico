@@ -25,7 +25,8 @@ public:
     void crossover();
     void mutacao();
     void eliminarNaoElite();
-    
+    void imprimirPopulacao();
+    void ordenar();
     
     friend class Individuo;
 private:

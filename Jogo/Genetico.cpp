@@ -8,7 +8,6 @@
 #include "Individuo.hpp"
 
 Genetico::Genetico(int matriz, int popInicial, int elite, int mutacao, int geracoes) {
-    cerr << "Iniciando Genético" << endl;
     this->Matrix = matriz;
     this->Elite = elite;
     this->Mutation = mutacao;
@@ -16,26 +15,25 @@ Genetico::Genetico(int matriz, int popInicial, int elite, int mutacao, int gerac
     this->geracoes = geracoes;
     int ger = 0;
     bool stop = false;
-    while (ger < geracoes) {
-        cerr<<"Geração: "<<ger<<endl;
-        this->gerarPopulacao();
+    this->gerarPopulacao();
+    while (!stop) {
         this->crossover();
-        this->mutacao();        
-        stop = this->avaliarPopulacao();
-        this->eliminarNaoElite();
-        if(stop == true){
-            break;
+        if (this->avaliarPopulacao() == true or ger >= geracoes) {
+            stop = true;
         }
+        this->eliminarNaoElite();
         ger++;
-        sort(this->populacao.begin(), this->populacao.end());
     }
+    cerr<<"Tamanho: "<<Matrix<<endl;
+    cerr << "Geração: " << ger << endl;
     this->populacao[0]->imprimirAtributos();
 }
 
 void Genetico::gerarPopulacao() {
     if (this->populacao.size() < this->popInicial) {
-        for (int i = this->populacao.size(); i < this->popInicial; i++) {
-            Individuo* ind = new Individuo(this->Matrix);
+        int i = this->populacao.size();
+        for (; i < this->popInicial; i++) {
+            Individuo* ind = new Individuo(this->Matrix, geracoes);
             ind->preencher();
             this->populacao.push_back(ind);
         }
@@ -43,7 +41,7 @@ void Genetico::gerarPopulacao() {
 }
 
 bool Genetico::avaliarPopulacao() {
-    sort(this->populacao.begin(), this->populacao.end());
+    this->ordenar();
     Individuo* aux = this->populacao[0];
     if (aux->vermelhos == 0) {
         return true;
@@ -53,34 +51,50 @@ bool Genetico::avaliarPopulacao() {
 }
 
 void Genetico::crossover() {
-    int i = this->populacao.size();
-    for (; i < this->populacao.size();) {
-        Individuo* pai = this->populacao[i];
-        Individuo* mae = this->populacao[i + 1];
-        this->populacao.push_back(pai->cruzar(mae));
-        this->populacao.push_back(mae->cruzar(pai));
-        i++;
-        i++;
+    if (this->populacao.size() < this->popInicial) {
+        this->gerarPopulacao();
     }
-}
-
-void Genetico::mutacao() {
-    int i = this->populacao.size();
-    for (; i < ((this->populacao.size() * this->Mutation) / 100); ) {
-        Individuo* pai = this->populacao[i];
-        Individuo* mae = this->populacao[i + 1];
-        this->populacao.push_back(pai->cruzar(mae));
-        this->populacao.push_back(mae->cruzar(pai));
-        i++;
-        i++;
+    int aux = this->populacao.size();
+    for (int i = 0; i < aux;) {
+        int pai = rand()%aux;
+        int mae = rand()%aux;
+        Individuo* filho1 = this->populacao[pai]->cruzar(this->populacao[mae]);
+        Individuo* filho2 = this->populacao[mae]->cruzar(this->populacao[pai]);        
+        if(rand()%100 < ((this->populacao.size() * this->Mutation) / 100)) filho1->clicar(rand()%this->Matrix, rand()%this->Matrix);
+        if(rand()%100 < ((this->populacao.size() * this->Mutation) / 100)) filho2->clicar(rand()%this->Matrix, rand()%this->Matrix);
+        filho1->balancear();
+        filho2->balancear();
+        this->populacao.push_back(filho1);
+        this->populacao.push_back(filho2);
+        i += 2;
     }
 }
 
 void Genetico::eliminarNaoElite() {
-    int i = this->populacao.size();
-    int tam = this->populacao.size();
-    for (; i >= ((tam * this->Elite) / 100); i--) {
-        this->populacao.pop_back();
+    this->populacao.resize(((this->populacao.size() * this->Elite) / 100));
+}
+
+void Genetico::imprimirPopulacao() {
+    for (Individuo* ind : populacao) {
+        ind->imprimirAtributos();
     }
 }
 
+void Genetico::ordenar() {
+    for (int i = 0; i < this->populacao.size(); i++) {
+        for (int j = 0; j < this->populacao.size(); j++) {
+            if (this->populacao[i]->vermelhos < this->populacao[j]->vermelhos) {
+                Individuo* aux = this->populacao[i];
+                this->populacao[i] = this->populacao[j];
+                this->populacao[j] = aux;
+            }
+            if (this->populacao[i]->vermelhos == this->populacao[j]->vermelhos) {
+                if (this->populacao[i]->clicados < this->populacao[j]->clicados) {
+                    Individuo* aux = this->populacao[i];
+                    this->populacao[i] = this->populacao[j];
+                    this->populacao[j] = aux;
+                }
+            }
+        }
+    }
+}

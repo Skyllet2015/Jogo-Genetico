@@ -18,13 +18,13 @@ using namespace std;
 
 class Individuo {
 public:
-    Individuo(int tam);
+    Individuo(int tam, int ger);
     void preencher();
     bool clicar(int linha, int coluna);
     void balancear();
-    Individuo* cruzar(Individuo* ind);
+    Individuo* cruzar(Individuo* ind);    
     
-    bool operator<(Individuo* i);
+    bool operator<(Individuo* ind);
     
     void imprimirAtributos();
     void imprimirMatriz();
@@ -35,6 +35,7 @@ private:
     int clicados;
     int tamanho;
     int balanceamento;
+    int geracao;
     vector<vector<int>> matrizClic;
     vector<vector<int>> matrizCores;
     
