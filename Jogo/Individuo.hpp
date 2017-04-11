@@ -29,6 +29,8 @@ public:
     void imprimirAtributos();
     void imprimirMatriz();
     
+    virtual ~Individuo();
+    
     friend class Genetico;
 private:
     int vermelhos;
@@ -36,8 +38,8 @@ private:
     int tamanho;
     int balanceamento;
     int geracao;
-    vector<vector<int>> matrizClic;
-    vector<vector<int>> matrizCores;
+    vector<vector<int> > matrizClic;
+    vector<vector<int> > matrizCores;
     
 };
 

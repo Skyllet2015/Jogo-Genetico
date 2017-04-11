@@ -10,13 +10,13 @@
 Individuo::Individuo(int tam, int ger) {
     this->geracao = ger;
     this->tamanho = tam;
-    this->matrizClic = vector<vector<int>> (tam, vector<int>(tam));
-    this->matrizCores = vector<vector<int>> (tam, vector<int>(tam));
+    this->matrizClic = vector<vector<int> > (tam, vector<int>(tam));
+    this->matrizCores = vector<vector<int> > (tam, vector<int>(tam));
 }
 
 void Individuo::preencher() {
-    
-    for (int cont = 0; cont < tamanho+tamanho/4;) {
+
+    for (int cont = 0; cont < tamanho + tamanho / 4;) {
         int add = clicar(rand() % tamanho, rand() % tamanho);
         if (add == true) cont++;
     }
@@ -91,17 +91,14 @@ void Individuo::balancear() {
 Individuo* Individuo::cruzar(Individuo* ind) {
     Individuo* filho = new Individuo(this->tamanho, geracao);
     int val = 0, cont = 0;
-    cerr << "" << endl;
     for (int i = 0; i < this->tamanho; i++) {
         for (int j = 0; j < this->tamanho; j++) {
-            if ((val == 0 and (this->matrizClic[i][j] == 1)) and (filho->matrizClic[i][j] != 1)) {
+            if (val == 0 and this->matrizClic[i][j] == 1) {
                 filho->clicar(i, j);
                 val = 1;
-                cont++;
-            }else if ((val == 1 and (ind->matrizClic[i][j] == 1)) and (filho->matrizClic[i][j] != 1)) {
+            } else if (val == 1 and ind->matrizClic[i][j] == 1) {
                 filho->clicar(i, j);
                 val = 0;
-                cont++;
             }
         }
     }
@@ -133,4 +130,11 @@ void Individuo::imprimirMatriz() {
             cout << "[" << this->matrizCores[i][j] << "]";
         }
     }
+}
+
+Individuo::~Individuo(){
+    matrizClic.clear();
+    matrizCores.clear();
+    matrizClic.swap(matrizClic);
+    matrizCores.swap(matrizCores);
 }

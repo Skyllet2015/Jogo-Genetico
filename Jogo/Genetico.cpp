@@ -24,8 +24,8 @@ Genetico::Genetico(int matriz, int popInicial, int elite, int mutacao, int gerac
         this->eliminarNaoElite();
         ger++;
     }
-    cerr<<"Tamanho: "<<Matrix<<endl;
-    cerr << "Geração: " << ger << endl;
+    cout<<"Tamanho: "<<Matrix<<endl;
+    cout << "Geração: " << ger << endl;
     this->populacao[0]->imprimirAtributos();
 }
 
@@ -71,12 +71,16 @@ void Genetico::crossover() {
 }
 
 void Genetico::eliminarNaoElite() {
+    
+    for(int i = populacao.size(); i > ((this->populacao.size() * this->Elite) / 100); i--){
+        delete populacao[i];
+    }
     this->populacao.resize(((this->populacao.size() * this->Elite) / 100));
 }
 
 void Genetico::imprimirPopulacao() {
-    for (Individuo* ind : populacao) {
-        ind->imprimirAtributos();
+    for(int i = 0; i < populacao.size(); i++){
+        populacao[i]->imprimirAtributos();
     }
 }
 
