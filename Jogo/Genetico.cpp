@@ -7,25 +7,25 @@
 #include "Genetico.hpp"
 #include "Individuo.hpp"
 
-Genetico::Genetico(int matriz, int popInicial, int elite, int mutacao, int geracoes) {
+Genetico::Genetico(int matriz, int popInicial, int elite, int mutacao, int geracoesMax) {
     this->Matrix = matriz;
     this->Elite = elite;
     this->Mutation = mutacao;
     this->popInicial = popInicial;
-    this->geracoes = geracoes;
-    int ger = 0;
+    this->geracoesMax = geracoesMax;
+    int geracoes = 0;
     bool stop = false;
     this->gerarPopulacao();
     while (!stop) {
         this->crossover();
-        if (this->avaliarPopulacao() == true or ger >= geracoes) {
+        if (this->avaliarPopulacao() == true or geracoes >= geracoesMax) {
             stop = true;
         }
         this->eliminarNaoElite();
-        ger++;
+        geracoes++;
     }
     cout<<"Tamanho: "<<Matrix<<endl;
-    cout << "Geração: " << ger << endl;
+    cout << "Geração: " << geracoes << endl;
     this->populacao[0]->imprimirAtributos();
 }
 

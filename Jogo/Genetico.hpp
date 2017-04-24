@@ -8,15 +8,9 @@
 #ifndef GENETICO_HPP
 #define GENETICO_HPP
 
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
+#include "inclu.hpp"
 
-#include "Individuo.hpp"
 
-using namespace std;
 class Genetico {
 public:
     Genetico(int matriz, int popInicial, int elite, int mutacao, int geracoes);
@@ -30,7 +24,8 @@ public:
     
     friend class Individuo;
 private:
-    int geracoes; //Quantidade de gerações limite
+    int geracoesMax; //Quantidade de gerações limite
+    int geracoes; // Geracoes Percorridas
     int popInicial; //Tamanho da população inicial requerida
     int Matrix; //Tamanho da matriz quadrada
     int Elite; //Porcentagem considerada Elite

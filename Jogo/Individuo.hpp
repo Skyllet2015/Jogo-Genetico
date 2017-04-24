@@ -8,13 +8,7 @@
 #ifndef INDIVIDUO_HPP
 #define INDIVIDUO_HPP
 
-#include <cstdlib>
-#include <ctime>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
-using namespace std;
+#include "inclu.hpp"
 
 class Individuo {
 public:
@@ -38,8 +32,8 @@ private:
     int tamanho;
     int balanceamento;
     int geracao;
-    vector<vector<int> > matrizClic;
-    vector<vector<int> > matrizCores;
+    std::vector<std::vector<int> > matrizClic;
+    std::vector<std::vector<int> > matrizCores;
     
 };
 

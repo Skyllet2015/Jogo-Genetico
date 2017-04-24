@@ -5,6 +5,7 @@
  * Created on 31 de Março de 2017, 22:50
  */
 
+#include "inclu.hpp"
 #include "Individuo.hpp"
 #include "Genetico.hpp"
 
@@ -12,7 +13,7 @@ int main(int argc, char** argv) {
     cerr<<"Testando Início"<<endl;
     srand((unsigned) time(NULL));    
     
-    int tamanho = 5;
+    int tamanho = 3;
     //Genetico(int matriz, int popInicial, int elite, int mutacao, int geracoes);
     Genetico* gen = new Genetico(tamanho, 100*tamanho, 30, 50, (tamanho*10000));
     
